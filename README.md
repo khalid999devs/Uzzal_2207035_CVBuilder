@@ -10,8 +10,6 @@ A desktop application built with JavaFX that allows users to create professional
 
 ## Development Diary
 
-## Development Diary
-
 ### Initial Setup
 
 - Established basic project structure with Maven
