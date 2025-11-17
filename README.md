@@ -1,7 +1,5 @@
 # CV Builder - 2207035
 
-# CV Builder - 2207035
-
 A desktop application built with JavaFX that allows users to create professional CVs quickly and easily. The application provides an intuitive interface where users can input their personal information, work experience, education, skills, and projects, then preview and edit their CV before saving.
 
 ## Demo
