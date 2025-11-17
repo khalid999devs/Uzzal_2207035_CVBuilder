@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="650.0" prefWidth="1000.0" styleClass="root" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.cv_builder.CreateCVController">
+<BorderPane prefHeight="650.0" prefWidth="1000.0" styleClass="root" stylesheets="@styles/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.cv_builder.CreateCVController">
    <left>
       <VBox alignment="TOP_LEFT" prefHeight="650.0" spacing="12.0" styleClass="sidebar" BorderPane.alignment="CENTER">
          <children>
@@ -14,8 +22,8 @@
                   <Insets bottom="12.0" />
                </VBox.margin>
             </Label>
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSidebarDashboard" styleClass="nav-button" text="Dashboard" />
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSidebarCreate" styleClass="nav-button, nav-button-selected" text="Create" />
+            <Button maxWidth="Infinity" onAction="#handleSidebarDashboard" styleClass="nav-button" text="Dashboard" />
+            <Button maxWidth="Infinity" onAction="#handleSidebarCreate" styleClass="nav-button, nav-button-selected" text="Create" />
          </children>
          <padding>
             <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
@@ -29,96 +37,98 @@
                <children>
                   <VBox maxWidth="720.0" spacing="24.0" styleClass="card">
                      <padding>
-                        <Insets bottom="40.0" left="48.0" right="48.0" top="40.0" />
+                        <Insets bottom="36.0" top="24.0" />
                      </padding>
                      <children>
-                        <Label styleClass="card-title" text="Create New CV" />
-                        <GridPane hgap="20.0" vgap="18.0">
-                          <columnConstraints>
-                            <ColumnConstraints halignment="RIGHT" hgrow="NEVER" minWidth="140.0" prefWidth="140.0" />
-                            <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="36.0" vgrow="NEVER" />
-                            <RowConstraints minHeight="60.0" vgrow="NEVER" />
-                            <RowConstraints minHeight="36.0" vgrow="NEVER" />
-                              <RowConstraints minHeight="36.0" vgrow="NEVER" />
-                              <RowConstraints minHeight="50.0" vgrow="NEVER" />
-                              <RowConstraints minHeight="70.0" vgrow="NEVER" />
-                              <RowConstraints minHeight="50.0" vgrow="NEVER" />
-                              <RowConstraints minHeight="70.0" vgrow="NEVER" />
-                              <RowConstraints minHeight="70.0" vgrow="NEVER" />
-                          </rowConstraints>
+                        <HBox alignment="TOP_LEFT" spacing="24.0">
                            <children>
-                              <Label styleClass="field-label" text="Full Name" GridPane.valignment="TOP">
-                                 <GridPane.margin>
-                                    <Insets top="8.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <TextField fx:id="fullNameField" promptText="Enter your full name" GridPane.columnIndex="1" />
-                              <Label styleClass="field-label" text="Profile Photo" GridPane.rowIndex="1" GridPane.valignment="TOP">
-                                 <GridPane.margin>
-                                    <Insets top="8.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <VBox spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <VBox spacing="16.0" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <StackPane styleClass="photo-preview-box" maxWidth="100.0" maxHeight="100.0" minWidth="100.0" minHeight="100.0">
+                                    <Label styleClass="card-title" text="Create New CV" />
+                                    
+                                    <VBox spacing="6.0" styleClass="field-box">
                                        <children>
-                                          <ImageView fx:id="photoPreviewImageView" fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" />
+                                          <Label styleClass="field-label" text="Full Name" />
+                                          <TextField fx:id="fullNameField" promptText="Enter your full name" />
                                        </children>
-                                    </StackPane>
-                                    <Button fx:id="uploadPhotoButton" mnemonicParsing="false" onAction="#handleUploadPhoto" text="Upload Photo" styleClass="secondary-button" />
-                                    <Label fx:id="photoPathLabel" styleClass="photo-path-label" visible="false" wrapText="true" />
+                                    </VBox>
+                                    
+                                    <HBox spacing="16.0">
+                                       <children>
+                                          <VBox spacing="6.0" styleClass="field-box" HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <Label styleClass="field-label" text="Email" />
+                                                <TextField fx:id="emailField" prefHeight="36.0" promptText="email@company.com" />
+                                             </children>
+                                          </VBox>
+                                          <VBox spacing="6.0" styleClass="field-box" HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <Label styleClass="field-label" text="Phone" />
+                                                <TextField fx:id="phoneField" prefHeight="36.0" promptText="+8801XXXXXXXXX" />
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
                                  </children>
                               </VBox>
-                              <Label styleClass="field-label" text="Email" GridPane.rowIndex="2" GridPane.valignment="TOP">
-                                 <GridPane.margin>
-                                    <Insets top="8.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <TextField fx:id="emailField" promptText="email@company.com" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <Label styleClass="field-label" text="Phone" GridPane.rowIndex="3" GridPane.valignment="TOP">
-                                 <GridPane.margin>
-                                    <Insets top="8.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <TextField fx:id="phoneField" promptText="01940-49-16-60" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <Label styleClass="field-label" text="Address" GridPane.rowIndex="4" GridPane.valignment="TOP">
-                                 <GridPane.margin>
-                                    <Insets top="8.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <TextArea fx:id="addressArea" prefHeight="50.0" prefRowCount="2" promptText="Your address" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                              <Label styleClass="field-label" text="Education" GridPane.rowIndex="5" GridPane.valignment="TOP">
-                                 <GridPane.margin>
-                                    <Insets top="8.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <TextArea fx:id="educationArea" prefHeight="70.0" prefRowCount="3" promptText="Your educational background" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                              <Label styleClass="field-label" text="Skills" GridPane.rowIndex="6" GridPane.valignment="TOP">
-                                 <GridPane.margin>
-                                    <Insets top="8.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <TextArea fx:id="skillsArea" prefHeight="50.0" prefRowCount="2" promptText="Your skills" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                              <Label styleClass="field-label" text="Work Experience" GridPane.rowIndex="7" GridPane.valignment="TOP">
-                                 <GridPane.margin>
-                                    <Insets top="8.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <TextArea fx:id="workExperienceArea" prefHeight="70.0" prefRowCount="3" promptText="Your work experience" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                              <Label styleClass="field-label" text="Projects" GridPane.rowIndex="8" GridPane.valignment="TOP">
-                                 <GridPane.margin>
-                                    <Insets top="8.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <TextArea fx:id="projectsArea" prefHeight="70.0" prefRowCount="3" promptText="Your projects" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                              
+                              <VBox alignment="BOTTOM_RIGHT" maxWidth="180.0" minWidth="131.0" prefHeight="181.0" prefWidth="143.0" spacing="8.0" styleClass="field-box">
+
+                                  <children>
+                                    <StackPane maxHeight="120.0" maxWidth="120.0" minHeight="120.0" minWidth="120.0" styleClass="photo-preview-box">
+                                       <children>
+                                          <ImageView fx:id="photoPreviewImageView" fitHeight="116.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@assets/photoPH.jpg" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </StackPane>
+                                    <Button fx:id="uploadPhotoButton" maxWidth="120.0" mnemonicParsing="false" onAction="#handleUploadPhoto" prefHeight="32.0" prefWidth="120.0" styleClass="photo-upload-button" text="Upload Photo" />
+                                 </children>
+
+                              </VBox>
                            </children>
-                           <padding>
-                              <Insets bottom="4.0" top="4.0" />
-                           </padding>
-                        </GridPane>
+                        </HBox>
+                        
+                        <VBox spacing="16.0">
+                           <children>
+                              <VBox spacing="6.0" styleClass="field-box">
+                                 <children>
+                                    <Label styleClass="field-label" text="Address" />
+                                    <TextArea fx:id="addressArea" prefHeight="80.0" prefRowCount="3" promptText="Your address" wrapText="true" />
+                                 </children>
+                              </VBox>
+                              
+                              <VBox spacing="6.0" styleClass="field-box">
+                                 <children>
+                                    <Label styleClass="field-label" text="Work Experience" />
+                                    <TextArea fx:id="workExperienceArea" prefHeight="80.0" prefRowCount="3" promptText="Your work experience" wrapText="true" />
+                                 </children>
+                              </VBox>
+                              
+                              <VBox spacing="6.0" styleClass="field-box">
+                                 <children>
+                                    <Label styleClass="field-label" text="Projects" />
+                                    <TextArea fx:id="projectsArea" prefHeight="80.0" prefRowCount="3" promptText="Your projects" wrapText="true" />
+                                 </children>
+                              </VBox>
+                              
+                              <VBox spacing="6.0" styleClass="field-box">
+                                 <children>
+                                    <Label styleClass="field-label" text="Education" />
+                                    <TextArea fx:id="educationArea" prefHeight="80.0" prefRowCount="3" promptText="Your educational background" wrapText="true" />
+                                 </children>
+                              </VBox>
+                              
+                              <VBox spacing="6.0" styleClass="field-box">
+                                 <children>
+                                    <Label styleClass="field-label" text="Skills" />
+                                    <TextArea fx:id="skillsArea" prefHeight="80.0" prefRowCount="3" promptText="Your skills" wrapText="true" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
                         <HBox alignment="CENTER_RIGHT" spacing="12.0">
                            <children>
                               <Button mnemonicParsing="false" onAction="#handleBackToHome" styleClass="secondary-button" text="Back" />

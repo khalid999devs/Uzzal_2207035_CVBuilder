@@ -7,7 +7,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -50,9 +49,6 @@ public class CreateCVController {
     @FXML
     private ImageView photoPreviewImageView;
 
-    @FXML
-    private Label photoPathLabel;
-
     private String selectedPhotoPath;
 
     @FXML
@@ -78,9 +74,6 @@ public class CreateCVController {
                 uploadPhotoButton.setText("Change Photo");
                 Image image = new Image(selectedPhotoPath, true);
                 photoPreviewImageView.setImage(image);
-                String fileName = selectedPhotoPath.substring(selectedPhotoPath.lastIndexOf('/') + 1);
-                photoPathLabel.setText(fileName);
-                photoPathLabel.setVisible(true);
             }
         }
     }
@@ -127,8 +120,6 @@ public class CreateCVController {
             selectedPhotoPath = file.toURI().toString();
             uploadPhotoButton.setText("Change Photo");
             photoPreviewImageView.setImage(new Image(selectedPhotoPath, true));
-            photoPathLabel.setText(file.getName());
-            photoPathLabel.setVisible(true);
         }
     }
 
@@ -162,12 +153,6 @@ public class CreateCVController {
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("CV Generated");
-        alert.setHeaderText(null);
-        alert.setContentText("CV generated successfully.");
-        alert.showAndWait();
     }
 
     private boolean validate() {

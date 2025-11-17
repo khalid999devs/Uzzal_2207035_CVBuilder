@@ -5,7 +5,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="650.0" prefWidth="1000.0" styleClass="root" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.cv_builder.PreviewCVController">
+<BorderPane prefHeight="650.0" prefWidth="1000.0" styleClass="root" stylesheets="@styles/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.cv_builder.PreviewCVController">
    <left>
       <VBox alignment="TOP_LEFT" prefHeight="650.0" spacing="12.0" styleClass="sidebar" BorderPane.alignment="CENTER">
          <children>
@@ -14,8 +14,8 @@
                   <Insets bottom="12.0" />
                </VBox.margin>
             </Label>
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSidebarDashboard" styleClass="nav-button" text="Dashboard" />
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSidebarCreate" styleClass="nav-button, nav-button-selected" text="Create" />
+            <Button maxWidth="Infinity" onAction="#handleSidebarDashboard" styleClass="nav-button" text="Dashboard" />
+            <Button maxWidth="Infinity" onAction="#handleSidebarCreate" styleClass="nav-button, nav-button-selected" text="Create" />
          </children>
          <padding>
             <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
@@ -23,13 +23,24 @@
       </VBox>
    </left>
    <center>
-      <ScrollPane fitToWidth="true" styleClass="scroll-pane" BorderPane.alignment="CENTER">
-         <content>
-            <StackPane>
-               <children>
-                  <VBox maxWidth="750.0" spacing="0.0" styleClass="cv-document">
+      <StackPane BorderPane.alignment="CENTER">
+         <children>
+            <ScrollPane fitToWidth="true" styleClass="scroll-pane">
+               <content>
+                  <StackPane>
                      <children>
-                        <!-- Header Section -->
+                        <VBox styleClass="cv-document">
+
+                           <children>
+                              <HBox alignment="CENTER_LEFT" styleClass="preview-header">
+                                 <children>
+                                    <Label styleClass="card-title" text="Preview CV" HBox.hgrow="ALWAYS" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="24.0" left="40.0" right="40.0" top="24.0" />
+                                 </padding>
+                              </HBox>
+                        
                         <HBox alignment="CENTER_LEFT" spacing="30.0" styleClass="cv-header">
                            <children>
                               <VBox alignment="CENTER_LEFT" spacing="6.0" HBox.hgrow="ALWAYS">
@@ -59,19 +70,13 @@
                                     </VBox>
                                  </children>
                               </VBox>
-                              <VBox alignment="TOP_RIGHT" spacing="12.0">
-                                 <children>
-                                    <Button mnemonicParsing="false" onAction="#handleBackToEdit" styleClass="edit-button" text="Edit CV" />
-                                    <ImageView fx:id="photoImageView" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" styleClass="cv-photo" />
-                                 </children>
-                              </VBox>
+                              <ImageView fx:id="photoImageView" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" styleClass="cv-photo" />
                            </children>
                            <padding>
-                              <Insets bottom="30.0" left="40.0" right="40.0" top="30.0" />
+                              <Insets bottom="30.0" left="40.0" right="40.0" top="24" />
                            </padding>
                         </HBox>
                         
-                        <!-- Education Section -->
                         <VBox spacing="12.0" styleClass="cv-section">
                            <children>
                               <Label styleClass="cv-section-title" text="Education" />
@@ -82,7 +87,6 @@
                            </padding>
                         </VBox>
                         
-                        <!-- Skills Section -->
                         <VBox spacing="12.0" styleClass="cv-section">
                            <children>
                               <Label styleClass="cv-section-title" text="Skills" />
@@ -93,7 +97,6 @@
                            </padding>
                         </VBox>
                         
-                        <!-- Work Experience Section -->
                         <VBox spacing="12.0" styleClass="cv-section">
                            <children>
                               <Label styleClass="cv-section-title" text="Work Experience" />
@@ -104,7 +107,6 @@
                            </padding>
                         </VBox>
                         
-                        <!-- Projects Section -->
                         <VBox spacing="12.0" styleClass="cv-section">
                            <children>
                               <Label styleClass="cv-section-title" text="Projects" />
@@ -120,5 +122,12 @@
             </StackPane>
          </content>
       </ScrollPane>
+      <Button mnemonicParsing="false" onAction="#handleBackToEdit" styleClass="edit-button" text="Edit CV" StackPane.alignment="TOP_RIGHT">
+         <StackPane.margin>
+            <Insets right="40.0" top="24.0" />
+         </StackPane.margin>
+      </Button>
+      </children>
+   </StackPane>
    </center>
 </BorderPane>
