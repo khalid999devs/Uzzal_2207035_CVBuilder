@@ -21,7 +21,7 @@ public class mainApplication extends Application {
         );
         scene.getStylesheets().add(cssUrl.toExternalForm());
 
-        stage.setTitle("CV Builder - Create Professional CVs");
+        stage.setTitle("CV Builder (2207035)");
         stage.setScene(scene);
         stage.show();
     }

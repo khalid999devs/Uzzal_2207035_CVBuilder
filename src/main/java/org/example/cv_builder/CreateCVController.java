@@ -161,11 +161,19 @@ public class CreateCVController {
         if (fullNameField.getText() == null || fullNameField.getText().isBlank()) {
             errors.append("Full Name is required.\n");
         }
-        if (emailField.getText() == null || emailField.getText().isBlank()) {
+        
+        String email = emailField.getText();
+        if (email == null || email.isBlank()) {
             errors.append("Email is required.\n");
+        } else if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+            errors.append("Invalid email format.\n");
         }
-        if (phoneField.getText() == null || phoneField.getText().isBlank()) {
+        
+        String phone = phoneField.getText();
+        if (phone == null || phone.isBlank()) {
             errors.append("Phone Number is required.\n");
+        } else if (!phone.matches("^(\\+8801|01)[0-9]{9}$")) {
+            errors.append("Invalid phone format. Use +8801XXXXXXXXX or 01XXXXXXXXX format.\n");
         }
 
         if (errors.length() > 0) {
