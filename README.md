@@ -4,3 +4,8 @@
  - Basic structure
  - Loading and checking things.
  - Connected with remote repo.
+
+## Created Draft process and projects
+- Added the screens
+- Updated and created Controller functions
+- Made the Working Version
