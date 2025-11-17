@@ -1,0 +1,320 @@
+.root {
+  -fx-font-family: 'Segoe UI', Arial, sans-serif;
+  -fx-background-color: #f5f5f5;
+
+  -primary: #2563eb;
+  -primary-hover: #1d4ed8;
+  -secondary: #e5e7eb;
+  -secondary-hover: #d1d5db;
+  -text-dark: #1a1a1a;
+  -text-light: #6b7280;
+  -nav-text: #9ca3af;
+  -border: #d1d5db;
+  -sidebar-bg: #1f2937;
+  -white: white;
+  -light-bg: #f9fafb;
+  -transparent: transparent;
+}
+
+.sidebar {
+  -fx-background-color: -sidebar-bg;
+  -fx-min-width: 210px;
+}
+
+.sidebar-title {
+  -fx-text-fill: -white;
+  -fx-font-size: 22px;
+  -fx-font-weight: bold;
+  -fx-padding: 0 0 4 0;
+}
+
+.nav-button {
+  -fx-background-color: -transparent;
+  -fx-text-fill: -nav-text;
+  -fx-padding: 12 20;
+  -fx-background-radius: 8;
+  -fx-cursor: hand;
+  -fx-font-size: 14px;
+  -fx-alignment: CENTER_LEFT;
+}
+
+.nav-button:hover {
+  -fx-background-color: rgba(255, 255, 255, 0.1);
+  -fx-text-fill: -white;
+}
+
+.nav-button-selected {
+  -fx-background-color: -primary;
+  -fx-text-fill: -white;
+}
+
+.card {
+  -fx-background-color: -white;
+  -fx-background-radius: 12;
+}
+
+.dashboard-header {
+  -fx-background-color: -white;
+  -fx-border-color: transparent transparent -secondary transparent;
+  -fx-border-width: 0 0 1 0;
+}
+
+.dashboard-title {
+  -fx-font-size: 32px;
+  -fx-font-weight: bold;
+  -fx-text-fill: -text-dark;
+}
+
+.dashboard-subtitle {
+  -fx-font-size: 16px;
+  -fx-text-fill: -text-light;
+  -fx-padding: 8 0 0 0;
+}
+
+.action-card {
+  -fx-background-color: -white;
+  -fx-background-radius: 12;
+  -fx-border-color: -border;
+  -fx-border-width: 1;
+  -fx-border-radius: 12;
+  -fx-min-width: 240px;
+  -fx-max-width: 240px;
+  -fx-cursor: hand;
+}
+
+.action-card:hover {
+  -fx-border-color: -primary;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 8, 0, 0, 2);
+}
+
+.action-card-button {
+  -fx-background-color: -white;
+  -fx-background-radius: 12;
+  -fx-border-color: -border;
+  -fx-border-width: 1;
+  -fx-border-radius: 12;
+  -fx-cursor: hand;
+  -fx-padding: 20;
+  -fx-min-width: 180px;
+  -fx-max-width: 180px;
+  -fx-min-height: 180px;
+  -fx-max-height: 180px;
+}
+
+.action-card-button:hover {
+  -fx-border-color: -primary;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 8, 0, 0, 2);
+}
+
+.action-icon {
+  -fx-font-size: 42px;
+  -fx-font-weight: bold;
+  -fx-text-fill: -primary;
+}
+
+.action-title {
+  -fx-font-size: 15px;
+  -fx-font-weight: 600;
+  -fx-text-fill: -text-dark;
+}
+
+.action-description {
+  -fx-font-size: 12px;
+  -fx-text-fill: -text-light;
+  -fx-max-width: 140px;
+  -fx-alignment: CENTER;
+}
+
+.action-description {
+  -fx-font-size: 12px;
+  -fx-text-fill: -text-light;
+  -fx-max-width: 200px;
+}
+
+.card-title {
+  -fx-font-size: 24px;
+  -fx-font-weight: bold;
+  -fx-text-fill: -text-dark;
+}
+
+.subtitle {
+  -fx-font-size: 15px;
+  -fx-text-fill: -text-light;
+}
+
+.section-title {
+  -fx-font-size: 17px;
+  -fx-font-weight: 600;
+  -fx-text-fill: -text-dark;
+}
+
+.field-label {
+  -fx-font-size: 14px;
+  -fx-font-weight: 500;
+  -fx-text-fill: -text-light;
+}
+
+.button {
+  -fx-cursor: hand;
+}
+
+.primary-button {
+  -fx-background-color: -primary;
+  -fx-text-fill: -white;
+  -fx-padding: 10 24;
+  -fx-background-radius: 6;
+  -fx-font-size: 14px;
+  -fx-font-weight: 600;
+  -fx-cursor: hand;
+}
+
+.primary-button:hover {
+  -fx-background-color: -primary-hover;
+}
+
+.secondary-button {
+  -fx-background-color: -secondary;
+  -fx-text-fill: -text-dark;
+  -fx-padding: 10 24;
+  -fx-background-radius: 6;
+  -fx-font-size: 14px;
+  -fx-cursor: hand;
+}
+
+.secondary-button:hover {
+  -fx-background-color: -secondary-hover;
+}
+
+.text-field,
+.text-area {
+  -fx-background-color: -white;
+  -fx-border-color: -border;
+  -fx-border-radius: 6;
+  -fx-background-radius: 6;
+  -fx-padding: 8 12;
+  -fx-font-size: 14px;
+  -fx-text-fill: -text-dark;
+}
+
+.text-field:focused,
+.text-area:focused {
+  -fx-border-color: -primary;
+  -fx-border-width: 2;
+}
+
+.text-area .content {
+  -fx-background-color: -white;
+}
+
+.photo-path-label {
+  -fx-font-size: 12px;
+  -fx-text-fill: -text-light;
+  -fx-font-style: italic;
+}
+
+.photo-preview-box {
+  -fx-border-color: -border;
+  -fx-border-width: 2;
+  -fx-border-radius: 8;
+  -fx-background-color: -light-bg;
+  -fx-border-style: dashed;
+}
+
+.photo-preview-box > .viewport {
+  -fx-background-color: -light-bg;
+}
+
+.scroll-pane {
+  -fx-background-color: -transparent;
+}
+
+.separator .line {
+  -fx-border-color: -border;
+  -fx-border-width: 1 0 0 0;
+}
+
+.cv-document {
+  -fx-background-color: -white;
+}
+
+.cv-header {
+  -fx-background-color: -light-bg;
+  -fx-border-color: -transparent -transparent -border -transparent;
+  -fx-border-width: 0 0 1 0;
+}
+
+.cv-name {
+  -fx-font-size: 30px;
+  -fx-font-weight: bold;
+  -fx-text-fill: -text-dark;
+}
+
+.contact-label {
+  -fx-font-size: 13px;
+  -fx-font-weight: 600;
+  -fx-text-fill: -text-light;
+  -fx-min-width: 60px;
+}
+
+.contact-value {
+  -fx-font-size: 13px;
+  -fx-text-fill: -text-dark;
+}
+
+.cv-photo {
+  -fx-border-color: -border;
+  -fx-border-width: 1;
+  -fx-border-radius: 4;
+}
+
+.edit-button {
+  -fx-background-color: -primary;
+  -fx-text-fill: -white;
+  -fx-padding: 8 20;
+  -fx-background-radius: 6;
+  -fx-font-size: 13px;
+  -fx-font-weight: 600;
+  -fx-cursor: hand;
+}
+
+.edit-button:hover {
+  -fx-background-color: -primary-hover;
+}
+
+.cv-section {
+  -fx-border-color: -transparent -transparent -secondary -transparent;
+  -fx-border-width: 0 0 1 0;
+}
+
+.cv-section-title {
+  -fx-font-size: 18px;
+  -fx-font-weight: bold;
+  -fx-text-fill: -text-dark;
+  -fx-padding: 0 0 6 0;
+  -fx-border-color: -transparent -transparent -primary -transparent;
+  -fx-border-width: 0 0 2 0;
+  -fx-max-width: 180px;
+}
+
+.cv-content {
+  -fx-background-color: -transparent;
+  -fx-border-color: -transparent;
+  -fx-padding: 0;
+  -fx-font-size: 14px;
+  -fx-text-fill: -text-dark;
+  -fx-focus-color: -transparent;
+  -fx-cursor: default;
+}
+
+.cv-content:focused {
+  -fx-border-color: -transparent;
+}
+
+.cv-content .content {
+  -fx-background-color: -transparent;
+  -fx-padding: 0;
+}
+
+.cv-content > .scroll-pane > .scroll-bar {
+  -fx-opacity: 0;
+}

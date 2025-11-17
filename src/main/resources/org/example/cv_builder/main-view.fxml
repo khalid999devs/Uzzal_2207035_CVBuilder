@@ -1,16 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.example.cv_builder.mainController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<BorderPane prefHeight="650.0" prefWidth="1000.0" styleClass="root" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.cv_builder.MainController">
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+
+   <left>
+      <VBox alignment="TOP_LEFT" prefHeight="650.0" spacing="12.0" styleClass="sidebar" BorderPane.alignment="CENTER">
+         <children>
+            <Label styleClass="sidebar-title" text="CV Builder">
+               <VBox.margin>
+                  <Insets bottom="12.0" />
+               </VBox.margin>
+            </Label>
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSidebarDashboard" styleClass="nav-button, nav-button-selected" text="Dashboard" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSidebarCreate" styleClass="nav-button" text="Create" />
+         </children>
+         <padding>
+            <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
+         </padding>
+      </VBox>
+   </left>
+
+   <center>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <VBox alignment="CENTER" styleClass="dashboard-header">
+               <children>
+                  <Label styleClass="dashboard-title" text="CV Builder" />
+                  <Label styleClass="dashboard-subtitle" text="Create professional CVs quickly and easily" />
+               </children>
+               <padding>
+                  <Insets bottom="32.0" left="40.0" right="40.0" top="32.0" />
+               </padding>
+            </VBox>
+            
+            <VBox alignment="TOP_LEFT" spacing="24.0">
+               <children>
+                  <HBox spacing="20.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#handleCreateNewCv" styleClass="action-card-button">
+                           <graphic>
+                              <VBox alignment="CENTER" spacing="6.0">
+                                 <children>
+                                    <Label styleClass="action-icon" text="+" />
+                                    <Label styleClass="action-title" text="Create New CV" />
+                                    <Label styleClass="action-description" text="Start building yours" textAlignment="CENTER" wrapText="true" />
+                                 </children>
+                              </VBox>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets bottom="40.0" left="40.0" right="40.0" top="20.0" />
+               </padding>
+            </VBox>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
