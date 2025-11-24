@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.example.cv_builder.database.DatabaseManager;
 
 import java.io.IOException;
 import java.net.URL;
@@ -13,6 +14,8 @@ public class mainApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        DatabaseManager.getInstance();
+        
         FXMLLoader fxmlLoader = new FXMLLoader(mainApplication.class.getResource("main-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1000, 650);
 
@@ -24,5 +27,10 @@ public class mainApplication extends Application {
         stage.setTitle("CV Builder (2207035)");
         stage.setScene(scene);
         stage.show();
+    }
+
+    @Override
+    public void stop() {
+        DatabaseManager.getInstance().closeConnection();
     }
 }
