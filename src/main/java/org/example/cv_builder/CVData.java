@@ -1,6 +1,7 @@
 package org.example.cv_builder;
 
 public class CVData {
+    private Integer id;
     private String fullName;
     private String email;
     private String phone;
@@ -10,6 +11,16 @@ public class CVData {
     private String workExperience;
     private String projects;
     private String photoPath;
+    private String createdAt;
+    private String updatedAt;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getFullName() {
         return fullName;
@@ -81,5 +92,21 @@ public class CVData {
 
     public void setPhotoPath(String photoPath) {
         this.photoPath = photoPath;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
