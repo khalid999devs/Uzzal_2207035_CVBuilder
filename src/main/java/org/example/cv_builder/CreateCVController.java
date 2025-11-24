@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.example.cv_builder.database.CVRepository;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,12 +48,18 @@ public class CreateCVController {
     private Button uploadPhotoButton;
 
     @FXML
+    private Button generateCVButton;
+
+    @FXML
     private ImageView photoPreviewImageView;
 
     private String selectedPhotoPath;
+    private Integer currentCVId;
+    private CVRepository repository;
 
     @FXML
     public void initialize() {
+        repository = CVRepository.getInstance();
         loadExistingData();
     }
 
@@ -60,6 +67,8 @@ public class CreateCVController {
         CVDataManager dataManager = CVDataManager.getInstance();
         if (dataManager.hasCurrentCVData()) {
             CVData data = dataManager.getCurrentCVData();
+            currentCVId = data.getId();
+            
             if (data.getFullName() != null) fullNameField.setText(data.getFullName());
             if (data.getEmail() != null) emailField.setText(data.getEmail());
             if (data.getPhone() != null) phoneField.setText(data.getPhone());
@@ -74,6 +83,10 @@ public class CreateCVController {
                 uploadPhotoButton.setText("Change Photo");
                 Image image = new Image(selectedPhotoPath, true);
                 photoPreviewImageView.setImage(image);
+            }
+            
+            if (currentCVId != null && generateCVButton != null) {
+                generateCVButton.setText("Update CV");
             }
         }
     }
@@ -140,19 +153,45 @@ public class CreateCVController {
         data.setProjects(projectsArea.getText().trim());
         data.setPhotoPath(selectedPhotoPath);
 
-        CVDataManager.getInstance().setCurrentCVData(data);
+        if (currentCVId != null) {
+            data.setId(currentCVId);
+            boolean success = repository.updateCV(data);
+            if (!success) {
+                showError("Failed to update CV. Please try again.");
+                return;
+            }
+        } else {
+            int generatedId = repository.insertCV(data);
+            if (generatedId == -1) {
+                showError("Failed to save CV. Please try again.");
+                return;
+            }
+            data.setId(generatedId);
+        }
+
+        CVDataManager dataManager = CVDataManager.getInstance();
+        dataManager.setCurrentCVData(data);
+        dataManager.refreshCVList();
 
         FXMLLoader loader = new FXMLLoader(mainApplication.class.getResource("preview-cv-view.fxml"));
         Scene scene = new Scene(loader.load(), 1000, 650);
         scene.getStylesheets().add(
             mainApplication.class.getResource("styles/style.css").toExternalForm()
         );
-
+        
         PreviewCVController controller = loader.getController();
         controller.setData(data);
-
+        
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
+    }
+
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     private boolean validate() {
