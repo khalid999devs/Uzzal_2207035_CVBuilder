@@ -36,10 +36,10 @@
          <content>
             <VBox>
                <children>
-                  <VBox alignment="CENTER" prefWidth="790.0" styleClass="dashboard-header">
+               <VBox alignment="CENTER" prefWidth="773.5" styleClass="dashboard-header">
                      
                      <children>
-                        <ImageView fitHeight="250.0" fitWidth="790.0" pickOnBounds="true" preserveRatio="false">
+                        <ImageView fitHeight="250.0" fitWidth="773.5" pickOnBounds="true" preserveRatio="false">
                            <image>
                               <Image url="@assets/banner.png" />
                            </image></ImageView>

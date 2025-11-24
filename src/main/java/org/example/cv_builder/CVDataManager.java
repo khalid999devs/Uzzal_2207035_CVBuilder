@@ -12,6 +12,7 @@ public class CVDataManager {
     private List<CVData> savedCVs;
     private List<CVObserver> observers;
     private CVRepository repository;
+    private String navigationSource;
 
     private CVDataManager() {
         this.savedCVs = new ArrayList<>();
@@ -65,5 +66,13 @@ public class CVDataManager {
 
     public boolean hasCurrentCVData() {
         return currentCVData != null;
+    }
+
+    public String getNavigationSource() {
+        return navigationSource;
+    }
+
+    public void setNavigationSource(String source) {
+        this.navigationSource = source;
     }
 }

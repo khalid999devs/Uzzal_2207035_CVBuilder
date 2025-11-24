@@ -102,8 +102,27 @@ public class CreateCVController {
 
     @FXML
     private void handleBackToHome(ActionEvent event) throws IOException {
-        CVDataManager.getInstance().clearCurrentCVData();
-        loadScene(event, "main-view.fxml");
+        CVDataManager dataManager = CVDataManager.getInstance();
+        String source = dataManager.getNavigationSource();
+        
+        if ("preview".equals(source)) {
+            CVData currentData = dataManager.getCurrentCVData();
+            FXMLLoader loader = new FXMLLoader(mainApplication.class.getResource("preview-cv-view.fxml"));
+            Scene scene = new Scene(loader.load(), 1000, 650);
+            scene.getStylesheets().add(
+                mainApplication.class.getResource("styles/style.css").toExternalForm()
+            );
+            
+            PreviewCVController controller = loader.getController();
+            controller.setData(currentData);
+            
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+        } else {
+            dataManager.clearCurrentCVData();
+            dataManager.setNavigationSource(null);
+            loadScene(event, "main-view.fxml");
+        }
     }
 
     private void saveCurrentData() {

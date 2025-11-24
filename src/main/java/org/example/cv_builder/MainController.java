@@ -144,8 +144,8 @@ public class MainController implements CVObserver {
         stackPane.setOnMouseEntered(e -> buttonBox.setVisible(true));
         stackPane.setOnMouseExited(e -> buttonBox.setVisible(false));
         stackPane.setOnMouseClicked(e -> {
-            if (e.getTarget() == documentPreview || e.getTarget() == previewContent) {
-                handleEditCV(cv);
+            if (e.getTarget() != editButton && e.getTarget() != deleteButton) {
+                handleViewCV(cv);
             }
         });
         
@@ -154,8 +154,29 @@ public class MainController implements CVObserver {
         return card;
     }
 
+    private void handleViewCV(CVData cv) {
+        dataManager.setCurrentCVData(cv);
+        dataManager.setNavigationSource("dashboard");
+        try {
+            FXMLLoader loader = new FXMLLoader(mainApplication.class.getResource("preview-cv-view.fxml"));
+            Scene scene = new Scene(loader.load(), 1000, 650);
+            scene.getStylesheets().add(
+                mainApplication.class.getResource("styles/style.css").toExternalForm()
+            );
+            
+            PreviewCVController controller = loader.getController();
+            controller.setData(cv);
+            
+            Stage stage = (Stage) cvListContainer.getScene().getWindow();
+            stage.setScene(scene);
+        } catch (IOException e) {
+            showError("Failed to open preview.");
+        }
+    }
+
     private void handleEditCV(CVData cv) {
         dataManager.setCurrentCVData(cv);
+        dataManager.setNavigationSource("dashboard");
         try {
             loadScene(null, "create-cv-view.fxml");
         } catch (IOException e) {
@@ -190,7 +211,9 @@ public class MainController implements CVObserver {
 
     @FXML
     private void handleCreateNewCv(ActionEvent event) throws IOException {
-        CVDataManager.getInstance().clearCurrentCVData();
+        CVDataManager dataManager = CVDataManager.getInstance();
+        dataManager.clearCurrentCVData();
+        dataManager.setNavigationSource("dashboard");
         goToCreateScreen(event);
     }
 
@@ -201,6 +224,8 @@ public class MainController implements CVObserver {
 
     @FXML
     private void handleSidebarCreate(ActionEvent event) throws IOException {
+        CVDataManager.getInstance().clearCurrentCVData();
+        CVDataManager.getInstance().setNavigationSource("dashboard");
         goToCreateScreen(event);
     }
 

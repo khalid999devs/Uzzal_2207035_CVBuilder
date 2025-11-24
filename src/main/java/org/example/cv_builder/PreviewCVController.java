@@ -5,12 +5,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import org.example.cv_builder.database.CVRepository;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class PreviewCVController {
 
@@ -64,12 +68,55 @@ public class PreviewCVController {
 
     @FXML
     private void handleSidebarCreate(ActionEvent event) throws IOException {
+        CVDataManager dataManager = CVDataManager.getInstance();
+        dataManager.clearCurrentCVData();
+        dataManager.setNavigationSource("preview");
         loadScene(event, "create-cv-view.fxml");
     }
 
     @FXML
     private void handleBackToEdit(ActionEvent event) throws IOException {
+        CVDataManager.getInstance().setNavigationSource("preview");
         loadScene(event, "create-cv-view.fxml");
+    }
+
+    @FXML
+    private void handleDeleteCV(ActionEvent event) {
+        CVDataManager dataManager = CVDataManager.getInstance();
+        if (!dataManager.hasCurrentCVData()) {
+            return;
+        }
+        
+        CVData cv = dataManager.getCurrentCVData();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete CV");
+        alert.setHeaderText("Delete \"" + cv.getFullName() + "\"?");
+        alert.setContentText("This action cannot be undone.");
+        
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            CVRepository repository = CVRepository.getInstance();
+            boolean success = repository.deleteCV(cv.getId());
+            if (success) {
+                dataManager.refreshCVList();
+                dataManager.clearCurrentCVData();
+                try {
+                    loadScene(event, "main-view.fxml");
+                } catch (IOException e) {
+                    showError("Failed to return to dashboard.");
+                }
+            } else {
+                showError("Failed to delete CV.");
+            }
+        }
+    }
+
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     private void loadScene(ActionEvent event, String fxmlFile) throws IOException {

@@ -23,24 +23,28 @@
       </VBox>
    </left>
    <center>
-      <StackPane BorderPane.alignment="CENTER">
+      <VBox BorderPane.alignment="CENTER">
          <children>
-            <ScrollPane fitToWidth="true" styleClass="scroll-pane">
-               <content>
-                  <StackPane>
+            <HBox alignment="CENTER_LEFT" styleClass="preview-header" VBox.vgrow="NEVER">
+               <children>
+                  <Label styleClass="card-title" text="Preview CV" />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <HBox spacing="12.0">
                      <children>
-                        <VBox styleClass="cv-document">
-
-                           <children>
-                              <HBox alignment="CENTER_LEFT" styleClass="preview-header">
-                                 <children>
-                                    <Label styleClass="card-title" text="Preview CV" HBox.hgrow="ALWAYS" />
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="24.0" left="40.0" right="40.0" top="24.0" />
-                                 </padding>
-                              </HBox>
-                        
+                        <Button mnemonicParsing="false" onAction="#handleBackToEdit" styleClass="edit-button" text="Edit CV" />
+                        <Button mnemonicParsing="false" onAction="#handleDeleteCV" styleClass="delete-button" text="Delete CV" />
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets bottom="24.0" left="40.0" right="40.0" top="24.0" />
+               </padding>
+            </HBox>
+            
+            <ScrollPane fitToWidth="true" styleClass="scroll-pane" VBox.vgrow="ALWAYS">
+               <content>
+                  <VBox styleClass="cv-document">
+                     <children>
                         <HBox alignment="CENTER_LEFT" spacing="30.0" styleClass="cv-header">
                            <children>
                               <VBox alignment="CENTER_LEFT" spacing="6.0" HBox.hgrow="ALWAYS">
@@ -118,16 +122,9 @@
                         </VBox>
                      </children>
                   </VBox>
-               </children>
-            </StackPane>
-         </content>
-      </ScrollPane>
-      <Button mnemonicParsing="false" onAction="#handleBackToEdit" styleClass="edit-button" text="Edit CV" StackPane.alignment="TOP_RIGHT">
-         <StackPane.margin>
-            <Insets right="40.0" top="24.0" />
-         </StackPane.margin>
-      </Button>
-      </children>
-   </StackPane>
+               </content>
+            </ScrollPane>
+         </children>
+      </VBox>
    </center>
 </BorderPane>
