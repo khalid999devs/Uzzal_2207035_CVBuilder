@@ -36,3 +36,10 @@ A desktop application built with JavaFX that allows users to create professional
 - Removed success alerts to streamline user workflow
 - Cleaned up code by removing unnecessary comments and unused imports
 - Positioned Edit CV button as floating element in preview screen
+
+### DB Dependency and CRUD setups
+
+- Added DB Dependency for SQLite
+- Setup the IntelliJ IDEA
+- Updated Database Manager
+- Added CVRepository for the CRUD Operation with DB.
