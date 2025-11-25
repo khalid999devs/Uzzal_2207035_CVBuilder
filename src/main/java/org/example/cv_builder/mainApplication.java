@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.example.cv_builder.concurrent.DatabaseExecutor;
 import org.example.cv_builder.database.DatabaseManager;
 
 import java.io.IOException;
@@ -32,5 +33,6 @@ public class mainApplication extends Application {
     @Override
     public void stop() {
         DatabaseManager.getInstance().closeConnection();
+        DatabaseExecutor.shutdown();
     }
 }

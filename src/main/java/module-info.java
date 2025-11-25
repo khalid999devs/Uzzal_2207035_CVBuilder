@@ -6,4 +6,5 @@ module org.example.cv_builder {
     opens org.example.cv_builder to javafx.fxml;
     exports org.example.cv_builder;
     exports org.example.cv_builder.observer;
+    exports org.example.cv_builder.concurrent;
 }

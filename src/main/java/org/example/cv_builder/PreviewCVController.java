@@ -14,6 +14,9 @@ import javafx.stage.Stage;
 import org.example.cv_builder.database.CVRepository;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 public class PreviewCVController {
@@ -56,8 +59,14 @@ public class PreviewCVController {
         projectsLabel.setText(data.getProjects());
 
         if (data.getPhotoPath() != null && !data.getPhotoPath().isBlank()) {
-            Image image = new Image(data.getPhotoPath(), true);
-            photoImageView.setImage(image);
+            try {
+                Path photoPath = Paths.get(data.getPhotoPath());
+                if (Files.exists(photoPath)) {
+                    Image image = new Image(photoPath.toUri().toString(), true);
+                    photoImageView.setImage(image);
+                }
+            } catch (Exception e) {
+            }
         }
     }
 

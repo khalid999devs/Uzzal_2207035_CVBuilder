@@ -17,6 +17,12 @@ import org.example.cv_builder.database.CVRepository;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class CreateCVController {
 
@@ -81,8 +87,14 @@ public class CreateCVController {
             
             if (selectedPhotoPath != null && !selectedPhotoPath.isBlank()) {
                 uploadPhotoButton.setText("Change Photo");
-                Image image = new Image(selectedPhotoPath, true);
-                photoPreviewImageView.setImage(image);
+                try {
+                    Path photoPath = Paths.get(selectedPhotoPath);
+                    if (Files.exists(photoPath)) {
+                        Image image = new Image(photoPath.toUri().toString(), true);
+                        photoPreviewImageView.setImage(image);
+                    }
+                } catch (Exception e) {
+                }
             }
             
             if (currentCVId != null && generateCVButton != null) {
@@ -149,9 +161,25 @@ public class CreateCVController {
         );
         File file = chooser.showOpenDialog(stage);
         if (file != null) {
-            selectedPhotoPath = file.toURI().toString();
-            uploadPhotoButton.setText("Change Photo");
-            photoPreviewImageView.setImage(new Image(selectedPhotoPath, true));
+            try {
+                Path uploadsDir = Paths.get("uploads");
+                if (!Files.exists(uploadsDir)) {
+                    Files.createDirectories(uploadsDir);
+                }
+                
+                String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+                String extension = file.getName().substring(file.getName().lastIndexOf("."));
+                String fileName = fullNameField.getText().trim().replaceAll("[^a-zA-Z0-9]", "_") + "_" + timestamp + extension;
+                
+                Path destinationPath = uploadsDir.resolve(fileName);
+                Files.copy(file.toPath(), destinationPath, StandardCopyOption.REPLACE_EXISTING);
+                
+                selectedPhotoPath = "uploads/" + fileName;
+                uploadPhotoButton.setText("Change Photo");
+                photoPreviewImageView.setImage(new Image(destinationPath.toUri().toString(), true));
+            } catch (IOException e) {
+                showError("Failed to save photo. Please try again.");
+            }
         }
     }
 

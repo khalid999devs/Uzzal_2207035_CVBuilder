@@ -1,5 +1,6 @@
 package org.example.cv_builder;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +12,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
@@ -18,11 +20,16 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import org.example.cv_builder.concurrent.DatabaseExecutor;
 import org.example.cv_builder.database.CVRepository;
 import org.example.cv_builder.observer.CVObserver;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,37 +40,60 @@ public class MainController implements CVObserver {
 
     private CVRepository repository;
     private CVDataManager dataManager;
+    private ProgressIndicator loadingIndicator;
 
     @FXML
     public void initialize() {
         repository = CVRepository.getInstance();
         dataManager = CVDataManager.getInstance();
         dataManager.addObserver(this);
-        dataManager.refreshCVList();
-        loadCVCards();
+        
+        loadingIndicator = new ProgressIndicator();
+        loadingIndicator.setMaxSize(50, 50);
+        cvListContainer.getChildren().add(loadingIndicator);
+        
+        loadCVsAsync();
+    }
+
+    private void loadCVsAsync() {
+        DatabaseExecutor.executeAsync(() -> {
+            dataManager.refreshCVList();
+            return dataManager.getSavedCVs();
+        }).thenAccept(cvs -> {
+            Platform.runLater(() -> {
+                cvListContainer.getChildren().remove(loadingIndicator);
+                displayCVs(cvs);
+            });
+        }).exceptionally(ex -> {
+            Platform.runLater(() -> {
+                cvListContainer.getChildren().remove(loadingIndicator);
+                showError("Failed to load CVs. Please try again.");
+            });
+            return null;
+        });
     }
 
     @Override
     public void onCVListChanged() {
-        loadCVCards();
+        Platform.runLater(() -> loadCVCards());
     }
 
-    private void loadCVCards() {
+    private void displayCVs(List<CVData> savedCVs) {
         cvListContainer.getChildren().clear();
-        List<CVData> savedCVs = dataManager.getSavedCVs();
-        
         if (savedCVs.isEmpty()) {
-            Label emptyLabel = new Label("No saved CVs yet. Create your first CV!");
-            emptyLabel.setStyle("-fx-text-fill: #666; -fx-font-size: 14px;");
-            VBox emptyBox = new VBox(emptyLabel);
-            emptyBox.setAlignment(Pos.CENTER);
-            emptyBox.setPrefSize(200, 250);
-            cvListContainer.getChildren().add(emptyBox);
+            Label emptyLabel = new Label("No CVs yet. Create your first CV!");
+            emptyLabel.setStyle("-fx-text-fill: #999; -fx-font-size: 14px;");
+            cvListContainer.getChildren().add(emptyLabel);
         } else {
             for (CVData cv : savedCVs) {
                 cvListContainer.getChildren().add(createCVCard(cv));
             }
         }
+    }
+
+    private void loadCVCards() {
+        List<CVData> savedCVs = dataManager.getSavedCVs();
+        displayCVs(savedCVs);
     }
 
     private VBox createCVCard(CVData cv) {
@@ -90,12 +120,15 @@ public class MainController implements CVObserver {
         
         if (cv.getPhotoPath() != null && !cv.getPhotoPath().isBlank()) {
             try {
-                ImageView photoView = new ImageView(new Image(cv.getPhotoPath(), true));
-                photoView.setFitWidth(50);
-                photoView.setFitHeight(50);
-                photoView.setPreserveRatio(true);
-                photoView.setStyle("-fx-background-radius: 25; -fx-border-radius: 25;");
-                previewContent.getChildren().add(photoView);
+                Path photoPath = Paths.get(cv.getPhotoPath());
+                if (Files.exists(photoPath)) {
+                    ImageView photoView = new ImageView(new Image(photoPath.toUri().toString(), true));
+                    photoView.setFitWidth(50);
+                    photoView.setFitHeight(50);
+                    photoView.setPreserveRatio(true);
+                    photoView.setStyle("-fx-background-radius: 25; -fx-border-radius: 25;");
+                    previewContent.getChildren().add(photoView);
+                }
             } catch (Exception e) {
             }
         }
